@@ -7,10 +7,8 @@ import fs from "fs";
 import path from "path";
 import { Readable } from "stream";
 
-// ✅ avval app ni yaratamiz
 const app = express();
 
-// ✅ keyin static fayllarni ulaymiz
 app.use(express.static(path.join(__dirname, "public")));
 
 const upload = multer({ dest: "uploads/" });
@@ -21,8 +19,6 @@ app.post("/uploads", upload.single("file"), (req, res) => {
 
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: true }));
-
-// Qolgan logika...
 
 const parseCSVFile = (filePath: string): Promise<any[]> => {
   return new Promise((resolve, reject) => {
