@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <title>CSV Converter</title>
+    <link rel="stylesheet" href="../css/style.css" />
   </head>
   <body>
     <h2>CSV to JSON Converter</h2>
@@ -11,14 +12,19 @@
       <textarea
         id="csvInput"
         rows="10"
-        cols="60"
         placeholder="Enter CSV string here..."
       ></textarea>
+      <br />
+      <input type="file" id="csvFile" accept=".csv" />
       <br />
       <button type="submit">Convert</button>
     </form>
 
     <h3>Response:</h3>
     <pre id="responseArea"></pre>
+
+    <script src="script.js" defer></script>
+
+    <!-- TS transpile qilingani -->
   </body>
 </html>

@@ -4,13 +4,25 @@ import csvParser from "csv-parser";
 import { Parser } from "json2csv";
 import bodyParser from "body-parser";
 import fs from "fs";
+import path from "path";
 import { Readable } from "stream";
 
+// ✅ avval app ni yaratamiz
 const app = express();
+
+// ✅ keyin static fayllarni ulaymiz
+app.use(express.static(path.join(__dirname, "public")));
+
 const upload = multer({ dest: "uploads/" });
+
+app.post("/uploads", upload.single("file"), (req, res) => {
+  res.send("File received!");
+});
 
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Qolgan logika...
 
 const parseCSVFile = (filePath: string): Promise<any[]> => {
   return new Promise((resolve, reject) => {
@@ -34,11 +46,10 @@ app.post(
         data = await parseCSVFile(req.file.path);
         fs.unlinkSync(req.file.path);
       } else if (req.body.data) {
-        if (typeof req.body.data === "string") {
-          data = JSON.parse(req.body.data);
-        } else {
-          data = req.body.data;
-        }
+        data =
+          typeof req.body.data === "string"
+            ? JSON.parse(req.body.data)
+            : req.body.data;
       } else if (req.body.csv) {
         const csvText: string = req.body.csv;
         data = [];
